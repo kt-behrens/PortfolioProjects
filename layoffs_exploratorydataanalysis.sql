@@ -6,17 +6,19 @@ FROM layoffs_staging2;
 SELECT MAX(total_laid_off), MAX(percentage_laid_off)
 FROM layoffs_staging2;
 
+-- companies where 100 percent of the staff was laid off
 SELECT *
 FROM layoffs_staging2
 WHERE percentage_laid_off = 1
-ORDER BY total_laid_off DESC;
+-- these are mostly startups, people who went out of business during this time
 
+-- order by funds_raised_millions to see how big some companies were
 SELECT *
 FROM layoffs_staging2
 WHERE percentage_laid_off = 1
 ORDER BY funds_raised_millions DESC;
 
-
+-- companies with the most total layoffs
 SELECT company, SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY company
@@ -25,11 +27,13 @@ ORDER BY SUM(total_laid_off) DESC;
 SELECT MIN(`date`), MAX(`date`)
 FROM layoffs_staging2;
 
+-- by industry
 SELECT industry, SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY industry
 ORDER BY SUM(total_laid_off) DESC;
 
+-- by country
 SELECT country, SUM(total_laid_off)
 FROM layoffs_staging2
 GROUP BY country
